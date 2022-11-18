@@ -17,9 +17,10 @@ export class CalculTtcDirective implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     this.elementRef.nativeElement.textContent =
     this.currencyPipe.transform(
-      this.appCalculTtc.product.quantity * (this.appCalculTtc.product.price + this.roundTaxPipe
+      this.roundTaxPipe
+        .transform(this.appCalculTtc.product.quantity * (this.appCalculTtc.product.price + this.roundTaxPipe
         .transform(this.appCalculTtc.product.price * this.appCalculTtc.tax
-         / 100 ))
+         / 100 )))
       ,'EUR','symbol', '.2-2')
 
   }
