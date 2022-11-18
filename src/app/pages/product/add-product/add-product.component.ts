@@ -19,8 +19,8 @@ export class AddProductComponent implements OnInit {
     name: new FormControl('', Validators.required),
     category: new FormControl(CategoryType.AUTRE, Validators.required),
     imported: new FormControl(false, Validators.required),
-    price: new FormControl(null, [Validators.required, Validators.min(0)]),
-    quantity: new FormControl(null, [Validators.required, Validators.min(1)])
+    price: new FormControl(0, [Validators.required, Validators.min(0)]),
+    quantity: new FormControl(0, [Validators.required, Validators.min(1)])
   });
 
   constructor(private productsService: ProductsService,
@@ -30,7 +30,7 @@ export class AddProductComponent implements OnInit {
   }
 
   addProduct():void{
-    if(this.addProductForm.invalid) return
+    if(this.addProductForm.invalid) return;
     this.productsService
     .addProduct(this.addProductForm.value as unknown as IProduct).pipe(take(1))
     .subscribe({

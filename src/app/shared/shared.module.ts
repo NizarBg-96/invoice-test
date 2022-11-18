@@ -17,7 +17,7 @@ const PIPES = [RoundTaxAmountPipe ]
   ],
   exports:[...COMPONENTS, ...DIRECTIVES, ...PIPES],
   imports: [
-    CommonModule
+    CommonModule,
   ],providers:[...PIPES]
 })
 export class SharedModule { }

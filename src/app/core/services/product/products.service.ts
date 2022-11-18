@@ -116,7 +116,6 @@ export class ProductsService {
         return product.quantity * (product.price + this.roundTaxPipe
           .transform((product.price * this.getProductTaxRate(product))/100)) + sum }, 0))
       )
-      console.log(totalAmount)
      this._totalAmount.next(totalAmount)
   }
 

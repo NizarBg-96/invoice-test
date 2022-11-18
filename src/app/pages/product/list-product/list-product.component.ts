@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UpdateQtyType } from '@enums/update-qty-type.enum';
 import { IProduct } from '@models/product.model';
 import { ProductsService } from '@services/product/products.service';
+import {PrintService} from "@services/print/print.service";
 
 @Component({
   selector: 'app-list-product',
@@ -14,22 +15,31 @@ export class ListProductComponent implements OnInit {
   totalAmount$ = this.productsService.totalAmount$
 
 
-  constructor(private productsService: ProductsService) { }
+  constructor(private productsService: ProductsService, private printService: PrintService) { }
 
   ngOnInit(): void {}
 
 
-  updateQty(product: IProduct, updateQtyType: UpdateQtyType){
+  updateQty(product: IProduct, updateQtyType: UpdateQtyType): void{
     this.productsService.updateQty(product, updateQtyType )
   }
 
-  deleteProduct(product: IProduct){
+  deleteProduct(product: IProduct): void{
     this.productsService.deleteProduct(product)
   }
 
 
-  getTax(product: IProduct){
+  getTax(product: IProduct): number{
     return this.productsService.getProductTaxRate(product)
   }
 
-}
+  printInvoice(invoice: HTMLDivElement) {
+    this.printService.printInvoice(invoice)
+  }
+
+
+
+
+
+
+  }
