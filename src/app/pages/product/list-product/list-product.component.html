@@ -1,0 +1,75 @@
+<div class="row">
+  <div class="col-12">
+    <div class="table-responsive bg-white shadow">
+      <table class="table table-center table-padding mb-0">
+        <thead>
+          <tr>
+            <th class="border-bottom text-center py-3" style="min-width: 40px;">Nom</th>
+            <th class="border-bottom text-center py-3" style="min-width: 160px;">Catégorie</th>
+            <th class="border-bottom text-center py-3" style="min-width: 160px;">Prix Unit.HT</th>
+            <th class="border-bottom text-center py-3" style="min-width: 160px;">Etat</th>
+            <th class="border-bottom text-center py-3" style="min-width: 160px;">Qté</th>
+            <th class="border-bottom text-center py-3" style="min-width: 160px;">Montant TTC</th>
+            <th class="border-bottom py-3" style="min-width:20px "></th>
+
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let product of products$ | async" >
+
+            <td class="text-center ">{{product.name}}</td>
+
+            <td class="text-center ">{{product.category}}</td>
+
+            <td class="text-center">{{product.price| currency:'EUR':'symbol':'.2-2'}}</td>
+
+            <td class="text-center ">{{product.imported?'importé':'non importé'}}</td>
+
+            <td class="text-center">
+              <button
+                class="btn btn-icon btn-primary " (click)="updateQty(product, updateQtyType.DECREMENT)">-</button>
+              <input min="0" name="quantity" [value]="product.quantity" type="number"
+                class="btn btn-icon btn-primary  quantity m-1" [disabled]="true">
+              <button
+                class="btn btn-icon btn-primary " (click)="updateQty(product, updateQtyType.INCREMENT)">+</button>
+            </td>
+            <td class="text-center fw-bold" [appCalculTtc]="{product,tax: getTax(product)}" ></td>
+            <td><button class="btn btn-outline-danger btn-sm" (click)="deleteProduct(product)">X</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!--end col-->
+</div>
+<!--end row-->
+<div class="row">
+  <div class="col-lg-8 col-md-6 mt-4 pt-2">
+  </div>
+  <div class="col-lg-4 col-md-6 ms-auto mt-4 pt-2">
+    <div class="table-responsive bg-white rounded shadow">
+      <table class="table table-center table-padding mb-0">
+        <tbody>
+          <tr>
+            <td class="h6">Totale HT</td>
+            <td class="text-center fw-bold">{{(totalAmount$|async)?.totalHT | currency:'EUR':'symbol':'.2-2'}}</td>
+          </tr>
+          <tr>
+            <td class="h6">Taxes</td>
+            <td class="text-center fw-bold">{{(totalAmount$|async)?.totalTax | currency:'EUR':'symbol':'.2-2'}}</td>
+          </tr>
+          <tr class="bg-light">
+            <td class="h6">Totale TTC</td>
+            <td class="text-center fw-bold">{{(totalAmount$|async)?.totalTTC | currency:'EUR':'symbol':'.2-2'}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="mt-4 pt-2 d-flex justify-content-center align-items-center">
+      <a routerLink="/shop-checkouts" class="btn btn-primary">Impimer la facture</a>
+    </div>
+  </div>
+  <!--end col-->
+</div>
+<!--end row-->
